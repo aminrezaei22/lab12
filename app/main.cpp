@@ -6,9 +6,9 @@
 
 #include "blackjack.h"
 #include "dungeon.h"
-#include "hangman.h"
+#include "hangman_game.h"
 #include "input.h"
-#include "minesweeper.h"
+#include "minesweeper_game.h"
 
 namespace {
 enum class Choice { hangman, dungeon, blackjack, minesweeper, quit, invalid };
@@ -46,6 +46,8 @@ Choice parse_choice(const std::string &text) {
 } // namespace
 
 int main() {
+  Hangman hangman;
+  Minesweeper minesweeper;
   std::string line;
   while (true) {
     print_menu();
@@ -58,7 +60,8 @@ int main() {
     }
     switch (choice) {
     case Choice::hangman:
-      report_score(play_hangman());
+      hangman.play();
+      report_score(hangman.last_score());
       break;
     case Choice::dungeon:
       report_score(play_dungeon());
@@ -67,7 +70,8 @@ int main() {
       report_score(play_blackjack());
       break;
     case Choice::minesweeper:
-      report_score(play_minesweeper());
+      minesweeper.play();
+      report_score(minesweeper.last_score());
       break;
     case Choice::quit:
       break;
