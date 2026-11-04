@@ -29,6 +29,7 @@ add_library(arcade_lib STATIC
     src/game.cpp
     src/hand.cpp
     src/hangman.cpp
+    src/hangman_game.cpp
     src/input.cpp
     src/item.cpp
     src/minesweeper.cpp
