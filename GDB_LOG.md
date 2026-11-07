@@ -62,12 +62,60 @@ Construction: main calls `Hangman::Hangman`, which calls `Game::Game` first, the
 
 ### What a base pointer shows
 
-`print hangman` (paste it):
-
-`print *g` (paste it):
+```
+(gdb) break app/main.cpp:54       the line after Game *g = &hangman;
+(gdb) run
+(gdb) set print pretty on
+(gdb) print hangman
+$1 = {
+  <Game> = {
+    m_title = "Hangman",
+    m_last_score = 0
+  },
+  members of Hangman:
+  m_times_played = 0
+}
+(gdb) print *g
+$2 = {
+  m_title = "Hangman",
+  m_last_score = 0
+}
+```
 
 What is different, and why:
 
+Same object, same address, but through `g` gdb only shows the `Game` part. `g` is a `Game *`, so the type says the derived member is not there, even though it is in memory.
+
 `ptype Hangman` and `ptype g` (paste them):
 
+```
+(gdb) ptype Hangman
+type = class Hangman : public Game {
+    int m_times_played;
+  public:
+    Hangman(void);
+    void play(void);
+    int times_played(void) const;
+}
+(gdb) ptype g
+type = class Game {
+    std::string m_title;
+    int m_last_score;
+  public:
+    Game(std::string);
+    const std::string & title(void) const;
+    int last_score(void) const;
+    void play(void);
+  protected:
+    void set_score(int);
+    bool ask_play_again(void) const;
+} *
+(gdb) whatis g
+type = Game *
+```
+
+`ptype Hangman` lists only Hangman's own members and says `: public Game` for the rest, none of Game's members are repeated. `whatis g` is just `Game *`.
+
 One sentence on what `ptype Hangman` revealed about inheritance:
+
+Hangman does not get a copy of Game's members written into it, it contains a Game sub-object and adds one int and two functions on top.
