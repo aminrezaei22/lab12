@@ -26,6 +26,7 @@ add_library(arcade_lib STATIC
     src/deck.cpp
     src/direction.cpp
     src/dungeon.cpp
+    src/dungeon_game.cpp
     src/game.cpp
     src/hand.cpp
     src/hangman.cpp
