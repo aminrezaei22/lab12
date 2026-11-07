@@ -4,7 +4,7 @@
 #include <iostream>
 #include <string>
 
-#include "blackjack.h"
+#include "blackjack_game.h"
 #include "dungeon_game.h"
 #include "hangman_game.h"
 #include "input.h"
@@ -48,6 +48,7 @@ Choice parse_choice(const std::string &text) {
 int main() {
   Hangman hangman;
   Dungeon dungeon;
+  Blackjack blackjack;
   Minesweeper minesweeper;
   std::string line;
   while (true) {
@@ -69,7 +70,8 @@ int main() {
       report_score(dungeon.last_score());
       break;
     case Choice::blackjack:
-      report_score(play_blackjack());
+      blackjack.play();
+      report_score(blackjack.last_score());
       break;
     case Choice::minesweeper:
       minesweeper.play();

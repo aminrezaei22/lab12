@@ -21,6 +21,7 @@ endif()
 
 add_library(arcade_lib STATIC
     src/blackjack.cpp
+    src/blackjack_game.cpp
     src/board.cpp
     src/card.cpp
     src/deck.cpp
